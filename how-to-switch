@@ -1,0 +1,23 @@
+Open je swtich.yaml bestand. Aangezien we in configuaration.yaml hebben aangegeven dat dit een switch: bestand is, is switch: hier **niet** nogmaals nodig!
+
+Alleeerste moeten we de UUID van de slimme stekker moeten weten. Deze kunnen we vinden in: http://toon-ip/hdrv_zwave?action=getDevices.json
+Plak alles in een jsonlint.com, dit maak het eenvoudiger. We zoeken de UUID, zie screenshot voor een voorbeeld:
+
+https://i.ibb.co/vJzpZ2W/Screenshot-3.png
+
+Tijd om iets toe te voegen aan je switch.yaml
+
+Voeg onderstaande toe:
+
+- platform: command_line
+  switches:
+    vswitich1:
+      command_on: curl "http://toon ip/hdrv_zwave?action=basicCommand&uuid=UUID&state=1"
+      command_off: curl "http://toon ip/hdrv_zwave?action=basicCommand&uuid=UUID&state=0"
+      friendly_name: Give it a name :)
+
+**UUID** word vervangen met wat je heb gevonden hierboven.
+**toon ip** word vervangen met het ip adres van Toon
+
+Alles opslaan in switch en in je config, herstart Home Assistant nu, na de herstart zal je switch beschikbaar moeten zijn op: switch.vswitches1
+Zorg ook dat curl geinstalleerd staat op je Raspberry PI.
